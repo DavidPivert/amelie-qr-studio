@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio QR Amélie</title>
+    <meta
+      name="description"
+      content="Générez, enregistrez et exportez des QR codes YouTube dans un studio simple inspiré de l'univers d'Amélie."
+    />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="/assets/logo.png" alt="Logo Amélie" />
+          <div>
+            <p class="brand-kicker">Studio indépendant</p>
+            <h1 class="brand-title">QR Vidéos YouTube</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a class="ghost-button" href="https://site-amelie.vercel.app" target="_blank" rel="noreferrer">Site Amélie live</a>
+          <button class="ghost-button" id="exportAllButton" type="button">Exporter tous les QR en ZIP</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy card">
+          <p class="section-label">Même direction artistique, outil séparé</p>
+          <h2>Un studio QR simple pour les vidéos YouTube de la cliente.</h2>
+          <p>
+            Collez une URL YouTube, ajoutez un nom si besoin, et le studio génère un QR code
+            unique avec aperçu immédiat, téléchargements individuels en
+            <strong>PNG</strong> et <strong>SVG</strong>, plus un export groupé.
+          </p>
+          <div class="hero-notes">
+            <div class="hero-note">
+              <span class="hero-note-label">Stockage</span>
+              <p>Conservé localement dans ce navigateur pour rester compatible avec un projet GitHub + Vercel.</p>
+            </div>
+            <div class="hero-note">
+              <span class="hero-note-label">Export</span>
+              <p>Le ZIP génère un dossier <code>qrcodes/</code> avec les fichiers et un <code>index.json</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side card">
+          <p class="section-label">Ce que permet l’outil</p>
+          <ul class="feature-list">
+            <li>Validation des URLs YouTube</li>
+            <li>Prévisualisation instantanée</li>
+            <li>Téléchargement unitaire PNG / SVG</li>
+            <li>Historique des QR générés</li>
+            <li>Export ZIP complet</li>
+          </ul>
+        </aside>
+      </section>
+
+      <main class="workspace">
+        <section class="card form-card">
+          <div class="card-head">
+            <div>
+              <p class="section-label">Génération</p>
+              <h2 class="card-title">Créer un nouveau QR code</h2>
+            </div>
+            <div class="pill" id="entryCount">0 QR enregistré</div>
+          </div>
+
+          <form id="qrForm" class="form-grid">
+            <label class="field">
+              <span>URL YouTube</span>
+              <input id="youtubeUrl" name="url" type="url" placeholder="https://www.youtube.com/watch?v=..." required />
+              <small>Formats acceptés: `youtube.com`, `youtu.be`, `shorts`, `embed`.</small>
+            </label>
+
+            <label class="field">
+              <span>Nom optionnel</span>
+              <input id="qrName" name="name" type="text" placeholder="Ex. Respiration - séquence 02" />
+            </label>
+
+            <div class="button-row">
+              <button class="button" id="generateButton" type="submit">Générer</button>
+              <button class="ghost-button" id="clearStatusButton" type="button">Effacer le message</button>
+            </div>
+
+            <p class="status" id="formStatus" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <aside class="card preview-card">
+          <div class="card-head card-head-stack">
+            <div>
+              <p class="section-label">Aperçu</p>
+              <h2 class="card-title">Dernier QR généré</h2>
+            </div>
+            <p class="card-note">Le dernier QR généré reste disponible tant qu’il est stocké dans ce navigateur.</p>
+          </div>
+
+          <div class="preview-shell empty" id="previewShell">
+            <div>
+              <strong>Aucun QR généré pour l’instant.</strong>
+              <p>L’aperçu apparaîtra ici dès la première génération.</p>
+            </div>
+          </div>
+
+          <div class="preview-meta" id="previewMeta" hidden>
+            <h3 id="previewTitle"></h3>
+            <a id="previewUrl" href="#" target="_blank" rel="noreferrer"></a>
+            <p id="previewDate"></p>
+          </div>
+
+          <div class="downloads" id="downloadLinks" hidden>
+            <button class="ghost-button" id="downloadPngButton" type="button">Télécharger PNG</button>
+            <button class="ghost-button" id="downloadSvgButton" type="button">Télécharger SVG</button>
+          </div>
+        </aside>
+      </main>
+
+      <section class="card history-card">
+        <div class="card-head">
+          <div>
+            <p class="section-label">Historique</p>
+            <h2 class="card-title">QR déjà générés</h2>
+          </div>
+          <button class="ghost-button" id="clearAllButton" type="button">Vider l’historique</button>
+        </div>
+
+        <div class="history-grid" id="historyList"></div>
+      </section>
+    </div>
+  </body>
+</html>
